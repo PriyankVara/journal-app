@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
-
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -30,12 +28,12 @@ public class UserController {
     public ResponseEntity<?> editUser(@RequestBody User newUser) {
        Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
        String userName = authentication.getName();
-        User oldUser = userService.findByUserName(userName);
-        if(oldUser != null){
-            oldUser.setUserName(newUser.getUserName());
-            oldUser.setPassword(newUser.getPassword());
-            userService.saveNewUser(oldUser);
-            return new ResponseEntity<>(oldUser,HttpStatus.OK);
+        User userInDB = userService.findByUserName(userName);
+        if(userInDB != null){
+            userInDB.setUserName(newUser.getUserName());
+            userInDB.setPassword(newUser.getPassword());
+            userService.saveNewUser(userInDB);
+            return new ResponseEntity<>(userInDB,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

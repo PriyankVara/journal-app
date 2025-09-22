@@ -18,8 +18,10 @@ import com.priyank.JournalApplication.Service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
+    public SpringSecurity(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,7 +33,6 @@ public class SpringSecurity {
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
-
     }
 
 

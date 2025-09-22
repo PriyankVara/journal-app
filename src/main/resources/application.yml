@@ -12,3 +12,5 @@ spring:
 logging:
   level:
     root: INFO
+    org.springframework.web: ERROR
+    org.mongodb: ERROR
